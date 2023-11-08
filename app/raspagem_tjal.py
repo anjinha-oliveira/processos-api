@@ -32,6 +32,21 @@ def RasparTjal(cnj):
     autor_adv = soup.select(
         "#tablePartesPrincipais .nomeParteEAdvogado"
     )[0].contents[4].replace('\t', '').replace('\n', '').strip()
+    re = soup.select(
+        "#tablePartesPrincipais .nomeParteEAdvogado"
+    )[1].contents[0].replace('\n', '').replace('\t', '').strip()
+    re_adv = [
+        soup.select(
+            "#tablePartesPrincipais .nomeParteEAdvogado"
+        )[1].contents[4].replace('\n', '').replace('\t', '').strip(),
+        soup.select(
+            "#tablePartesPrincipais .nomeParteEAdvogado"
+        )[1].contents[8].replace('\n', '').replace('\t', '').strip(),
+        soup.select(
+            "#tablePartesPrincipais .nomeParteEAdvogado"
+        )[1].contents[12].replace('\n', '').replace('\t', '').strip()
+    ]
+
 
 
     return {
@@ -44,5 +59,7 @@ def RasparTjal(cnj):
         "valor_da_acao": valor_da_acao,
         "autor": autor,
         "autor_adv": autor_adv,
+        "re": re,
+        "re_adv": re_adv,
     }
 
