@@ -44,6 +44,4 @@ def RasparTjal():
         "juiz": juiz,
         "valor_da_acao": valor_da_acao,
     }
-        
-
 
