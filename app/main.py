@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from app.raspagem_tjal import RasparTjal
 
 from pydantic import BaseModel
 
@@ -16,16 +17,18 @@ async def buscar(processo: Processo):
             content={"message": "Cnj vazio."},
             status_code=400
         )
+    
+    dados = RasparTjal()
 
     return {
         "processo": {
-            "cnj": processo.cnj,
-            "classe": "Procedimento Comum Cível",
-            "area": "Civíl",
-            "assunto": "dano moral",
-            "data-distribuicao": "02/05/2018",
-            "juiz": "José Cícero Alves da Silva",
-            "valor-da-acao": "281.178,42",
+            "cnj": dados.get("cnj"),
+            "classe": dados.get("classe"),
+            "area": dados.get("area"),
+            "assunto": dados.get("assunto"),
+            "data-distribuicao": dados.get("data-distribuicao"),
+            "juiz": dados.get("juiz"),
+            "valor-da-acao": dados.get("valor-da-acao"),
             "partes-do-processo": {
                 "autor": {
                     "nome": "José Carlos Cerqueira Souza Filho",
