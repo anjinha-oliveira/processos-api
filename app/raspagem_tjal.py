@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 def RasparTjal(cnj):
 
-    URL = f'https://www2.tjal.jus.br/cpopg/show.do?processo.numero={cnj}'
+    URL = f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={cnj}"
     response_raw = requests.get(URL)
     soup = BeautifulSoup(response_raw.text, "html.parser") 
 
@@ -26,6 +26,12 @@ def RasparTjal(cnj):
     valor_da_acao = response.xpath(
         '//*[@id="valorAcaoProcesso"]/text()'
     )[0].replace(' ', '')
+    autor = soup.select(
+        "#tablePartesPrincipais .nomeParteEAdvogado"
+    )[0].contents[0].replace('\t', '').replace('\n', '')
+    autor_adv = soup.select(
+        "#tablePartesPrincipais .nomeParteEAdvogado"
+    )[0].contents[4].replace('\t', '').replace('\n', '')
 
     # Isso aqui precisa ser corrigido e pegar esses dados da página
     # autor, adv_autor = response.xpath(
@@ -46,5 +52,7 @@ def RasparTjal(cnj):
         "data_de_distribuicao": data_de_distribuicao,
         "juiz": juiz,
         "valor_da_acao": valor_da_acao,
+        "autor": autor,
+        "autor_adv": autor_adv,
     }
 
