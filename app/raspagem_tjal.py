@@ -4,13 +4,16 @@ from lxml import etree
 
 from bs4 import BeautifulSoup
 
-def RasparTjal():
+def RasparTjal(cnj):
 
-    URL = 'https://www2.tjal.jus.br/cpopg/show.do?processo.codigo=01000O7550000&processo.foro=1&processo.numero=0710802-55.2018.8.02.0001'
+    URL = f'https://www2.tjal.jus.br/cpopg/show.do?processo.numero={cnj}'
     response_raw = requests.get(URL)
     soup = BeautifulSoup(response_raw.text, "html.parser") 
 
     response = etree.HTML(str(soup)) 
+
+    if not response.xpath('//*[@id="numeroProcesso"]/text()'):
+        return None
 
     cnj = response.xpath('//*[@id="numeroProcesso"]/text()')[0].strip()
     classe = response.xpath('//*[@id="classeProcesso"]/text()')[0]

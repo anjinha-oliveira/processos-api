@@ -18,7 +18,13 @@ async def buscar(processo: Processo):
             status_code=400
         )
     
-    dados = RasparTjal()
+    dados = RasparTjal(cnj=processo.cnj)
+
+    if not dados:
+        return JSONResponse(
+            content={"message": "Cnj inválido."},
+            status_code=400
+        )
 
     return {
         "processo": {
