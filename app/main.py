@@ -26,9 +26,9 @@ async def buscar(processo: Processo):
             "classe": dados.get("classe"),
             "area": dados.get("area"),
             "assunto": dados.get("assunto"),
-            "data-distribuicao": dados.get("data-distribuicao"),
+            "data_de_distribuicao": dados.get("data_de_distribuicao"),
             "juiz": dados.get("juiz"),
-            "valor-da-acao": dados.get("valor-da-acao"),
+            "valor_da_acao": dados.get("valor_da_acao"),
             # "partes-do-processo": {
                 # "autor": {
                     # "nome": "José Carlos Cerqueira Souza Filho",

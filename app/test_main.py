@@ -10,9 +10,9 @@ client = TestClient(app)
     "assunto": "Dano Material",
     "classe": "Procedimento Comum Cível",
     "cnj": "0710802-55.2018.8.02.0001",
-    "data-distribuicao": "02/05/2018",
+    "data_de_distribuicao": "02/05/2018",
     "juiz": "José Cícero Alves da Silva",
-    "valor-da-acao": "281.178,42",
+    "valor_da_acao": "281.178,42",
 
 })
 def test_garante_que_recebemos_todas_informacoes(mocked_RasparTjal):
@@ -27,9 +27,9 @@ def test_garante_que_recebemos_todas_informacoes(mocked_RasparTjal):
             "classe": "Procedimento Comum Cível",
             "area": "Cível",
             "assunto": "Dano Material",
-            "data-distribuicao": "02/05/2018",
+            "data_de_distribuicao": "02/05/2018",
             "juiz": "José Cícero Alves da Silva",
-            "valor-da-acao": "281.178,42",
+            "valor_da_acao": "281.178,42",
             # "partes-do-processo": {
                 # "autor": {
                     # "nome": "José Carlos Cerqueira Souza Filho",

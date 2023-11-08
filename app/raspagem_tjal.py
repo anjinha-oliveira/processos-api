@@ -40,7 +40,7 @@ def RasparTjal():
         "classe": classe,
         "area": area,
         "assunto": assunto,
-        "data_distribuicao": data_de_distribuicao,
+        "data_de_distribuicao": data_de_distribuicao,
         "juiz": juiz,
         "valor_da_acao": valor_da_acao,
     }
