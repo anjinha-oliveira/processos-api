@@ -29,28 +29,28 @@ async def buscar(processo: Processo):
             "data-distribuicao": dados.get("data-distribuicao"),
             "juiz": dados.get("juiz"),
             "valor-da-acao": dados.get("valor-da-acao"),
-            "partes-do-processo": {
-                "autor": {
-                    "nome": "José Carlos Cerqueira Souza Filho",
-                    "advogados": [
-                        "Vinicius Faria de Cerqueira"
-                    ],
-                },
-                "reu": {
-                    "nome": "Cony Engenharia Ltda.",
-                    "advogados": [
-                        "Carlos Henrique de Mendonça Brandão",
-                        "Guilherme Freire Furtado",
-                        "Maria Eugênia Barreiros de Mello",
-                        "Vítor Reis de Araujo Carvalho",
-                    ]
-                }
-            },
-            "movimentacoes": [
-                {
-                    "data": "24/08/2023",
-                    "movimento": "Arquivado Definitivamente"
-                }
-            ]
+            # "partes-do-processo": {
+                # "autor": {
+                    # "nome": "José Carlos Cerqueira Souza Filho",
+                    # "advogados": [
+                        # "Vinicius Faria de Cerqueira"
+                    # ],
+                # },
+                # "reu": {
+                    # "nome": "Cony Engenharia Ltda.",
+                    # "advogados": [
+                        # "Carlos Henrique de Mendonça Brandão",
+                        # "Guilherme Freire Furtado",
+                        # "Maria Eugênia Barreiros de Mello",
+                        # "Vítor Reis de Araujo Carvalho",
+                    # ]
+                # }
+            # },
+            # "movimentacoes": [
+                # {
+                    # "data": "24/08/2023",
+                    #  "movimento": "Arquivado Definitivamente"
+                # }
+            # ]
         }
     }
