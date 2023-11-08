@@ -28,21 +28,11 @@ def RasparTjal(cnj):
     )[0].replace(' ', '')
     autor = soup.select(
         "#tablePartesPrincipais .nomeParteEAdvogado"
-    )[0].contents[0].replace('\t', '').replace('\n', '')
+    )[0].contents[0].replace('\t', '').replace('\n', '').strip()
     autor_adv = soup.select(
         "#tablePartesPrincipais .nomeParteEAdvogado"
-    )[0].contents[4].replace('\t', '').replace('\n', '')
+    )[0].contents[4].replace('\t', '').replace('\n', '').strip()
 
-    # Isso aqui precisa ser corrigido e pegar esses dados da página
-    # autor, adv_autor = response.xpath(
-        # '//*[@id="tablePartesPrincipais"]/tr[1]/td[2]'
-    # )[0].text.replace('\n', '').replace('\t', '').split('<br>')
-
-    # autor_tratamento = BeautifulSoup(autor, "html.parser")
-    # autor_tratado = autor_tratamento.get_text()
-
-    # adv_autor_tratamento = BeautifulSoup(adv_autor, "html.parser")
-    # adv_autor_tratado = adv_autor_tratamento.get_text()
 
     return {
         "cnj": cnj,
