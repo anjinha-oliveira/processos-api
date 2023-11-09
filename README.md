@@ -1,17 +1,28 @@
-Como executar no root do projeto:
+# Raspagem de dados
+
+Esse projeto consite na criação de uma API que busque dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE)
+
+Para isso foi necessário desenvolver crawlers para a coleta desses dados em suas respectivas urls.
+
+### Tecnologias usadas
+
+* Python3 3.5
+* Fastapi
+* Pytest
+* Postman
+
+Para executar API (Executar comando no **root** do projeto):
 
 ```sh
 $ python3 -m uvicorn main:app --reload --app-dir=app
 ```
 
-Para rodar os testes é preciso estar no repo *app*:
+Para executar testes (Executar no repo **app**):
 
 ```sh
 $ python3 -m pytest -v
 ```
 
-Para utilizar o scrapy shell:
+#### Rota de requisição POST:
 
-```sh
-$ scrapy shell 'url do processo'
-```
+* localhost:8000/buscar/
