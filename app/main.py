@@ -57,6 +57,6 @@ async def buscar(processo: Processo):
                     # "data": "24/08/2023",
                     #  "movimento": "Arquivado Definitivamente"
                 # }
-            # ]
+            #]
         }
     }
