@@ -52,11 +52,6 @@ async def buscar(processo: Processo):
                     "advogados": dados.get("reu_adv")
                 },
             },
-            # "movimentacoes": [
-                # {
-                    # "data": "24/08/2023",
-                    #  "movimento": "Arquivado Definitivamente"
-                # }
-            #]
-        }
+            "movimentacoes": dados.get("movimentacoes")
+        },
     }

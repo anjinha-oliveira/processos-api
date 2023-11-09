@@ -49,12 +49,24 @@ def RasparTjal(cnj):
     reu = soup.select(
         "#tableTodasPartes .nomeParteEAdvogado"
     )[3].contents[0].replace('\n', '').replace('\t', '').strip()
+
     reu_adv = {
         soup.select(
             "#tableTodasPartes .nomeParteEAdvogado"
         )[3].contents[4].replace('\n', '').replace('\t', '').strip()
     }
- 
+    movimentacoes = []
+    trs = soup.select("#tabelaTodasMovimentacoes tr")
+    for tr in trs:
+        data_movimentacao = tr.select(".dataMovimentacao")[0].contents[0].strip()
+        descricao_movimentacao = tr.select(".descricaoMovimentacao")[0].contents[0].strip()
+        movimentacoes.append(
+            {
+                "data": data_movimentacao,
+                "movimentacoes": descricao_movimentacao
+            }
+        )
+
 
     return {
         "cnj": cnj,
@@ -70,5 +82,6 @@ def RasparTjal(cnj):
         "re_adv": re_adv,
         "reu": reu,
         "reu_adv": reu_adv,
+        "movimentacoes": movimentacoes,
     }
 
