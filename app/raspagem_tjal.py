@@ -49,16 +49,12 @@ def RasparTjal(cnj):
     reu = soup.select(
         "#tableTodasPartes .nomeParteEAdvogado"
     )[3].contents[0].replace('\n', '').replace('\t', '').strip()
-
-
     reu_adv = {
         soup.select(
             "#tableTodasPartes .nomeParteEAdvogado"
         )[3].contents[4].replace('\n', '').replace('\t', '').strip()
     }
-        
-    
-
+ 
 
     return {
         "cnj": cnj,
