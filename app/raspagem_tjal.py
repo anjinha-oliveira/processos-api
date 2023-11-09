@@ -59,14 +59,17 @@ def RasparTjal(cnj):
     trs = soup.select("#tabelaTodasMovimentacoes tr")
     for tr in trs:
         data_movimentacao = tr.select(".dataMovimentacao")[0].contents[0].strip()
-        descricao_movimentacao = tr.select(".descricaoMovimentacao")[0].contents[0].strip()
+        
+        titulo_movimentacao = tr.select(".descricaoMovimentacao")[0].contents[0].strip()
+        descricao_movimentacao = tr.select('span')[0].text.strip()
+
         movimentacoes.append(
             {
                 "data": data_movimentacao,
-                "movimentacoes": descricao_movimentacao
+                "titulo": titulo_movimentacao,
+                "movimento": descricao_movimentacao,
             }
         )
-
 
     return {
         "cnj": cnj,
