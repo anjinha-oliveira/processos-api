@@ -11,6 +11,8 @@ from pydantic import BaseModel
 
 service = Service(ChromeDriverManager().install())
 
+navegador = webdriver.Chrome(service=service)
+
 app = FastAPI()
 
 
@@ -28,7 +30,7 @@ async def buscar(processo: Processo):
 
     dados = RasparTjal(
         url=f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={processo.cnj}",
-        url_segundo_grau= webdriver.Chrome()"https://www2.tjal.jus.br/cposg5/show.do?processo.codigo=P00006BXP0000"
+        url_segundo_grau="https://www2.tjal.jus.br/cposg5/show.do?processo.codigo=P00006BXP0000"
     )
 
     # if dados is None:
