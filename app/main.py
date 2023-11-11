@@ -3,17 +3,8 @@ from fastapi.responses import JSONResponse
 from app.raspagem_tjal import RasparTjal
 from app.raspagem_tjce import RasparTjce
 
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
-
 from pydantic import BaseModel
 
-service = Service(ChromeDriverManager().install())
-
-navegador = webdriver.Chrome(service=service)
-
-navegador.get("https://www2.tjal.jus.br/cposg5/open.do")
 app = FastAPI()
 
 
