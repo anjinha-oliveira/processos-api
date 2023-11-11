@@ -13,6 +13,7 @@ service = Service(ChromeDriverManager().install())
 
 navegador = webdriver.Chrome(service=service)
 
+navegador.get("https://www2.tjal.jus.br/cposg5/open.do")
 app = FastAPI()
 
 
