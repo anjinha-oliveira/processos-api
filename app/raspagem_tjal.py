@@ -1,16 +1,11 @@
-
 import requests
 from lxml import etree 
 
 from bs4 import BeautifulSoup
 
-import urllib3
 
-urllib3.disable_warnings()
-
-
-def RasparTjal(url, url_segundo_grau):
-    response_raw = requests.get(url, verify=False)
+def RasparTjal(url):
+    response_raw = requests.get(url)
     soup = BeautifulSoup(response_raw.text, "html.parser")
 
     response = etree.HTML(str(soup))
@@ -53,7 +48,6 @@ def RasparTjal(url, url_segundo_grau):
     reu = soup.select(
         "#tableTodasPartes .nomeParteEAdvogado"
     )[3].contents[0].replace('\n', '').replace('\t', '').strip()
-
     reu_adv = {
         soup.select(
             "#tableTodasPartes .nomeParteEAdvogado"
@@ -91,6 +85,6 @@ def RasparTjal(url, url_segundo_grau):
             "reu": reu,
             "reu_adv": reu_adv,
             "movimentacoes": movimentacoes,
-        }      
+        },
     }
 
