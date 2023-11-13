@@ -8,9 +8,6 @@ from lxml import etree
 from bs4 import BeautifulSoup
 
 
-
-
-
 def RasparTjalSegundoGrau(cnj):
 
     service = Service(ChromeDriverManager().install())
