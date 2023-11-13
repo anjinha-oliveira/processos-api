@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from app.raspagem_tjal import RasparTjal
-from app.raspagem_tjce import RasparTjce
+from app.segundo_grau_tjal import RasparTjalSegundoGrau
 
 from pydantic import BaseModel
 
@@ -22,7 +22,10 @@ async def buscar(processo: Processo):
 
     dados = RasparTjal(
         url=f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={processo.cnj}",
-        url_segundo_grau="https://www2.tjal.jus.br/cposg5/show.do?processo.codigo=P00006BXP0000"
+    )
+
+    segundo_grau = RasparTjalSegundoGrau(
+        processo.cnj
     )
 
     # if dados is None:
@@ -36,6 +39,7 @@ async def buscar(processo: Processo):
         )
 
     primeiro_grau = dados.get("primeiro_grau")
+
     return {
         "processo": {
             "primeiro_grau": {
@@ -65,33 +69,33 @@ async def buscar(processo: Processo):
                 "movimentacoes": primeiro_grau.get("movimentacoes")
             },
             "segundo_grau": {
-                "cnj": "0710802-55.2018.8.02.0001",
-                "classe": "Apelação Cível",
-                "area": "Civíl",
-                "assunto": "Obrigações",
-                "orgao_julgador": "Vice-Presidência",    
-                "valor_da_acao": "281.178,42",
+                "cnj": segundo_grau.get("cnj"),
+                "classe": segundo_grau.get("classe"),
+                "area": segundo_grau.get("area"),
+                "assunto": segundo_grau.get("assunto"),
+                "orgao_julgador": segundo_grau.get("orgao_julgador"),    
+                "valor_da_acao": segundo_grau.get("valor_da_acao"),
                 "partes_do_processo": {
                     "apelante": {
-                        "nome": "Cony Engenharia Ltda",
+                        "nome": segundo_grau.get("apelante"),
                         "advogados": [
-                            "Carlos Henrique de Mendonça Brandão"
+                            segundo_grau.get("apelante_adv"),
                         ]
                     },
                     "apelado": {
-                        "nome": "José Carlos Cerqueira Souza Filho",
+                        "nome": segundo_grau.get("apelado"),
                         "advogados": [
-                        "   Vinicius Faria de Cerqueira"
+                            segundo_grau.get("apelado_adv"),
+                        ]
+                    },
+                    "apelada": {
+                        "nome": segundo_grau.get("apelada"),
+                        "advogados": [
+                            segundo_grau.get("apelada_adv"),
                         ]
                     }
                 },
-                "movimentacoes": [
-                {
-                    "data": "26/04/2023",
-                    "titulo": "Certidão de Envio ao 1º Grau",
-                    "movimento": "Faço remessa dos presentes autos à Origem."
-                }
-            ]
+                "movimentacoes": segundo_grau.get("movimentacoes")
             }
         }
     }
