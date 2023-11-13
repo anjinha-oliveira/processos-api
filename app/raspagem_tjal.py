@@ -4,16 +4,20 @@ from lxml import etree
 
 from bs4 import BeautifulSoup
 
-def RasparTjal(cnj):
+import urllib3
 
-    URL = f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={cnj}"
-    response_raw = requests.get(URL)
-    soup = BeautifulSoup(response_raw.text, "html.parser") 
+urllib3.disable_warnings()
 
-    response = etree.HTML(str(soup)) 
+
+def RasparTjal(url, url_segundo_grau):
+    response_raw = requests.get(url, verify=False)
+    soup = BeautifulSoup(response_raw.text, "html.parser")
+
+    response = etree.HTML(str(soup))
 
     if not response.xpath('//*[@id="numeroProcesso"]/text()'):
         return None
+    
 
     cnj = response.xpath('//*[@id="numeroProcesso"]/text()')[0].strip()
     classe = response.xpath('//*[@id="classeProcesso"]/text()')[0]
@@ -72,19 +76,21 @@ def RasparTjal(cnj):
         )
 
     return {
-        "cnj": cnj,
-        "classe": classe,
-        "area": area,
-        "assunto": assunto,
-        "data_de_distribuicao": data_de_distribuicao,
-        "juiz": juiz,
-        "valor_da_acao": valor_da_acao,
-        "autor": autor,
-        "autor_adv": autor_adv,
-        "re": re,
-        "re_adv": re_adv,
-        "reu": reu,
-        "reu_adv": reu_adv,
-        "movimentacoes": movimentacoes,
+        "primeiro_grau": {
+            "cnj": cnj,
+            "classe": classe,
+            "area": area,
+            "assunto": assunto,
+            "data_de_distribuicao": data_de_distribuicao,
+            "juiz": juiz,
+            "valor_da_acao": valor_da_acao,
+            "autor": autor,
+            "autor_adv": autor_adv,
+            "re": re,
+            "re_adv": re_adv,
+            "reu": reu,
+            "reu_adv": reu_adv,
+            "movimentacoes": movimentacoes,
+        }      
     }
 
