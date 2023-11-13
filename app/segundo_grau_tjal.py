@@ -9,7 +9,10 @@ from bs4 import BeautifulSoup
 
 
 
-def RasparTjalSegundoGrau():
+
+
+def RasparTjalSegundoGrau(cnj):
+
     service = Service(ChromeDriverManager().install())
 
     navegador = webdriver.Chrome(service=service)
@@ -33,6 +36,7 @@ def RasparTjalSegundoGrau():
     assunto = soup.select("#assuntoProcesso")[0].text.strip()
     orgao_julgador = soup.select("#orgaoJulgadorProcesso")[0].text.strip()
     valor_da_acao = soup.select("#valorAcaoProcesso")[0].text.strip()
+
     apelante = soup.select(
                     "#tableTodasPartes .nomeParteEAdvogado"
                 )[0].contents[0].replace("\n", "").replace("\t", "").strip()
@@ -95,21 +99,19 @@ def RasparTjalSegundoGrau():
             }
         )
     return {
-        "segundo_grau": {
-            "cnj": cnj,
-            "classe": classe,
-            "area": area,
-            "assunto": assunto,
-            "orgao_julgador": orgao_julgador,
-            "valor_da_acao": valor_da_acao,
-            "apelante": apelante,
-            "apelante_adv": apelante_adv,
-            "apelado": apelado,
-            "apelado_adv": apelado_adv,
-            "apelada": apelada,
-            "apelada_adv": apelada_adv,
-            "movimentacoes": movimentacoes,
-        }
+        "cnj": cnj,
+        "classe": classe,
+        "area": area,
+        "assunto": assunto,
+        "orgao_julgador": orgao_julgador,
+        "valor_da_acao": valor_da_acao,
+        "apelante": apelante,
+        "apelante_adv": apelante_adv,
+        "apelado": apelado,
+        "apelado_adv": apelado_adv,
+        "apelada": apelada,
+        "apelada_adv": apelada_adv,
+        "movimentacoes": movimentacoes,
     }
 
 
