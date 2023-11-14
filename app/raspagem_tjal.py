@@ -12,7 +12,6 @@ def RasparTjal(url):
 
     if not response.xpath('//*[@id="numeroProcesso"]/text()'):
         return None
-    
 
     cnj = response.xpath('//*[@id="numeroProcesso"]/text()')[0].strip()
     classe = response.xpath('//*[@id="classeProcesso"]/text()')[0]
@@ -25,9 +24,8 @@ def RasparTjal(url):
     valor_da_acao = response.xpath(
         '//*[@id="valorAcaoProcesso"]/text()'
     )[0].replace(' ', '')
-    
+
     partes_do_processo = []
-    #import pdb; pdb.set_trace()
     trs = soup.select("#tableTodasPartes tr")
     for tr in trs:
         participacao = tr.select(".mensagemExibindo")[0].contents[0].strip()
@@ -39,6 +37,7 @@ def RasparTjal(url):
                 "nome": nome,
             }
         )
+        
     movimentacoes = []
     trs = soup.select("#tabelaTodasMovimentacoes tr")
     for tr in trs:
@@ -56,16 +55,14 @@ def RasparTjal(url):
         )
 
     return {
-        "primeiro_grau": {
-            "cnj": cnj,
-            "classe": classe,
-            "area": area,
-            "assunto": assunto,
-            "data_de_distribuicao": data_de_distribuicao,
-            "juiz": juiz,
-            "valor_da_acao": valor_da_acao,
-            "partes_do_processo": partes_do_processo,
-            "movimentacoes": movimentacoes,
-        },
+        "cnj": cnj,
+        "classe": classe,
+        "area": area,
+        "assunto": assunto,
+        "data_de_distribuicao": data_de_distribuicao,
+        "juiz": juiz,
+        "valor_da_acao": valor_da_acao,
+        "partes_do_processo": partes_do_processo,
+        "movimentacoes": movimentacoes,
     }
 
