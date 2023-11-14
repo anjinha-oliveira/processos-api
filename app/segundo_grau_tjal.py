@@ -34,47 +34,20 @@ def RasparTjalSegundoGrau(cnj):
     orgao_julgador = soup.select("#orgaoJulgadorProcesso")[0].text.strip()
     valor_da_acao = soup.select("#valorAcaoProcesso")[0].text.strip()
 
-    apelante = soup.select(
-                    "#tableTodasPartes .nomeParteEAdvogado"
-                )[0].contents[0].replace("\n", "").replace("\t", "").strip()
-    apelante_adv = [
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[0].contents[3].replace('\n', '').replace('\t', '').strip(),
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[0].contents[8].replace('\n', '').replace('\t', '').strip(),
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[0].contents[13].replace('\n', '').replace('\t', '').strip(),
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[0].contents[18].replace('\n', '').replace('\t', '').strip()
-    ]
-    apelante = soup.select(
-        "#tableTodasPartes .nomeParteEAdvogado"
-    )[1].contents[0].replace('\n', '').replace('\t', '').strip()
-    apelante_adv = [
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[1].contents[3].replace('\n', '').replace('\t', '').strip(),
-    ]
-    apelado = soup.select(
-        "#tableTodasPartes .nomeParteEAdvogado"
-    )[2].contents[0].replace('\n', '').replace('\t', '').strip()
-    apelado_adv = [
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[2].contents[3].replace('\n', '').replace('\t', '').strip(),
-    ]
-    apelada = soup.select(
-                "#tableTodasPartes .nomeParteEAdvogado"
-            )[3].contents[0].replace('\n', '').replace('\t', '').strip(),
-    apelada_adv = [
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[3].contents[3].replace('\n', '').replace('\t', '').strip()
-    ]
+    partes_do_processo = []
+    #import pdb; pdb.set_trace()
+    trs = soup.select("#tableTodasPartes tr")
+    for tr in trs:
+        participacao = tr.select(".mensagemExibindo")[0].contents[0].strip()
+        nome = tr.select(".nomeParteEAdvogado")[0].contents[0].strip()
+
+        partes_do_processo.append(
+            {
+                "tipo": participacao,
+                "nome": nome,
+            }
+        )
+        
     movimentacoes = []
     trs = soup.select("#tabelaUltimasMovimentacoes tr")
     for tr in trs:
@@ -102,12 +75,7 @@ def RasparTjalSegundoGrau(cnj):
         "assunto": assunto,
         "orgao_julgador": orgao_julgador,
         "valor_da_acao": valor_da_acao,
-        "apelante": apelante,
-        "apelante_adv": apelante_adv,
-        "apelado": apelado,
-        "apelado_adv": apelado_adv,
-        "apelada": apelada,
-        "apelada_adv": apelada_adv,
+        "partes_do_processo": partes_do_processo,
         "movimentacoes": movimentacoes,
     }
 

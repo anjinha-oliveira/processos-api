@@ -62,28 +62,8 @@ async def buscar(processo: Processo):
                 "assunto": segundo_grau.get("assunto"),
                 "orgao_julgador": segundo_grau.get("orgao_julgador"),    
                 "valor_da_acao": segundo_grau.get("valor_da_acao"),
-                "partes_do_processo": {
-                    "apelante": {
-                        "nome": segundo_grau.get("apelante"),
-                        "advogados": [
-                            segundo_grau.get("apelante_adv"),
-                        ]
-                    },
-                    "apelado": {
-                        "nome": segundo_grau.get("apelado"),
-                        "advogados": [
-                            segundo_grau.get("apelado_adv"),
-                        ]
-                    },
-                    "apelada": {
-                        "nome": segundo_grau.get("apelada"),
-                        "advogados": [
-                            segundo_grau.get("apelada_adv"),
-                        ]
-                    }
-                },
-                "movimentacoes": 
-                    segundo_grau.get("movimentacoes")
+                "partes_do_processo": segundo_grau.get("partes_do_processo"),
+                "movimentacoes": segundo_grau.get("movimentacoes")
             }
         }
     }
