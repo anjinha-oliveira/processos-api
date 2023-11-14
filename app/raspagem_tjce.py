@@ -43,7 +43,6 @@ def RasparTjce(cnj):
         valor_da_acao = response.xpath(
             '//*[@id="valorAcaoProcesso"]/text()'
         )[0].replace(' ', '')
-    import ipdb; ipdb.set_trace()
     partes_do_processo = []
     trs = soup.select("#tablePartesPrincipais tr")
     for tr in trs:
@@ -56,8 +55,23 @@ def RasparTjce(cnj):
                 "nome": nome,
             }
         )
-    
-    
+        import ipdb; ipdb.set_trace()
+        movimentacoes = []
+        trs = soup.select("#tabelaUltimasMovimentacoes tr")
+        for tr in trs:
+            data_movimentacao = tr.select(".dataMovimentacao")[0].contents[0].strip()
+            
+            titulo_movimentacao = tr.select(".descricaoMovimentacao")[0].contents[0].strip()
+            descricao_movimentacao = tr.select('span')[0].text.strip()
+
+            movimentacoes.append(
+                {
+                    "data": data_movimentacao,
+                    "titulo": titulo_movimentacao,
+                    "movimento": descricao_movimentacao,
+                }
+            )
+
     return {
         "primeiro_grau": {
             "cnj": cnj,
@@ -68,11 +82,7 @@ def RasparTjce(cnj):
             "juiz": juiz,
             "valor_da_acao": valor_da_acao,
             "partes_do_processo": partes_do_processo,
-            "re": re,
-            "re_adv": re_adv,
-            "reu": reu,
-            "reu_adv": reu_adv,
-            "movimentacoes": movimentacoes,
+            "movimentacoes": movimentacoes
         }
         
     }
