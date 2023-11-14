@@ -25,39 +25,25 @@ def RasparTjal(url):
     valor_da_acao = response.xpath(
         '//*[@id="valorAcaoProcesso"]/text()'
     )[0].replace(' ', '')
-    autor = soup.select(
-        "#tablePartesPrincipais .nomeParteEAdvogado"
-    )[0].contents[0].replace('\t', '').replace('\n', '').strip()
-    autor_adv = soup.select(
-        "#tablePartesPrincipais .nomeParteEAdvogado"
-    )[0].contents[4].replace('\t', '').replace('\n', '').strip()
-    re = soup.select(
-        "#tablePartesPrincipais .nomeParteEAdvogado"
-    )[1].contents[0].replace('\n', '').replace('\t', '').strip()
-    re_adv = [
-        soup.select(
-            "#tablePartesPrincipais .nomeParteEAdvogado"
-        )[1].contents[4].replace('\n', '').replace('\t', '').strip(),
-        soup.select(
-            "#tablePartesPrincipais .nomeParteEAdvogado"
-        )[1].contents[8].replace('\n', '').replace('\t', '').strip(),
-        soup.select(
-            "#tablePartesPrincipais .nomeParteEAdvogado"
-        )[1].contents[12].replace('\n', '').replace('\t', '').strip()
-    ]
-    reu = soup.select(
-        "#tableTodasPartes .nomeParteEAdvogado"
-    )[3].contents[0].replace('\n', '').replace('\t', '').strip()
-    reu_adv = {
-        soup.select(
-            "#tableTodasPartes .nomeParteEAdvogado"
-        )[3].contents[4].replace('\n', '').replace('\t', '').strip()
-    }
+    
+    partes_do_processo = []
+    #import pdb; pdb.set_trace()
+    trs = soup.select("#tableTodasPartes tr")
+    for tr in trs:
+        participacao = tr.select(".mensagemExibindo")[0].contents[0].strip()
+        nome = tr.select(".nomeParteEAdvogado")[0].contents[0].strip()
+
+        partes_do_processo.append(
+            {
+                "tipo": participacao,
+                "nome": nome,
+            }
+        )
     movimentacoes = []
     trs = soup.select("#tabelaTodasMovimentacoes tr")
     for tr in trs:
+
         data_movimentacao = tr.select(".dataMovimentacao")[0].contents[0].strip()
-        
         titulo_movimentacao = tr.select(".descricaoMovimentacao")[0].contents[0].strip()
         descricao_movimentacao = tr.select('span')[0].text.strip()
 
@@ -78,12 +64,7 @@ def RasparTjal(url):
             "data_de_distribuicao": data_de_distribuicao,
             "juiz": juiz,
             "valor_da_acao": valor_da_acao,
-            "autor": autor,
-            "autor_adv": autor_adv,
-            "re": re,
-            "re_adv": re_adv,
-            "reu": reu,
-            "reu_adv": reu_adv,
+            "partes_do_processo": partes_do_processo,
             "movimentacoes": movimentacoes,
         },
     }
