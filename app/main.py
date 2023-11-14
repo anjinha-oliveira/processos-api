@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from app.raspagem_tjal import RasparTjal
+from app.raspagem_tjce import RasparTjce
 from app.segundo_grau_tjal import RasparTjalSegundoGrau
 
 from pydantic import BaseModel
@@ -23,15 +24,17 @@ async def buscar(processo: Processo):
     dados = RasparTjal(
         url=f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={processo.cnj}",
     )
+    
 
     segundo_grau = RasparTjalSegundoGrau(
         processo.cnj
     )
 
-    # if dados is None:
-    #     dados = RasparTjce(
-    #         url=f"https://esaj.tjce.jus.br/cpopg/show.do?processo.numero={processo.cnj}"
-    #     )
+    if dados is None:
+        dados = RasparTjce(
+            processo.cnj
+        )
+
     if not dados:
         return JSONResponse(
             content={"message": "Cnj inválido."},
@@ -49,24 +52,8 @@ async def buscar(processo: Processo):
                 "assunto": primeiro_grau.get("assunto"),
                 "data_de_distribuicao": primeiro_grau.get("data_de_distribuicao"),
                 "juiz": primeiro_grau.get("juiz"),
-                "valor_da_acao": primeiro_grau.get("valor_da_acao"),
-                "partes-do-processo": {
-                    "autor": {
-                        "nome": primeiro_grau.get("autor"),
-                        "advogados": [
-                            primeiro_grau.get("autor_adv")
-                        ],
-                    },
-                    "re": {
-                        "nome": primeiro_grau.get("re"),
-                        "advogados": primeiro_grau.get("re_adv"),
-                    },
-                    "reu": {
-                        "nome": primeiro_grau.get("reu"),
-                        "advogados": primeiro_grau.get("reu_adv")
-                    },
-                },
-                "movimentacoes": primeiro_grau.get("movimentacoes")
+                "valor_da_acao": primeiro_grau.get("valor_da_acao"),   
+                "partes_do_processo": primeiro_grau.get("partes_do_processo")
             },
             "segundo_grau": {
                 "cnj": segundo_grau.get("cnj"),
@@ -95,7 +82,8 @@ async def buscar(processo: Processo):
                         ]
                     }
                 },
-                "movimentacoes": segundo_grau.get("movimentacoes")
+                "movimentacoes": 
+                    segundo_grau.get("movimentacoes")
             }
         }
     }
