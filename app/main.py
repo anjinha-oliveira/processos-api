@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from app.raspagem_tjal import RasparTjal
-from app.raspagem_tjce import RasparTjce
-from app.segundo_grau_tjal import RasparTjalSegundoGrau
+
+from raspagem_tjal import RasparTjal
+from raspagem_tjce import RasparTjce
+from segundo_grau_tjal import RasparTjalSegundoGrau
+from segundo_grau_tjce import RasparTjceSegundoGrau
 
 from pydantic import BaseModel
 
@@ -21,27 +23,27 @@ async def buscar(processo: Processo):
             status_code=400
         )
 
-    dados = RasparTjal(
+    segundo_grau = None
+    primeiro_grau = RasparTjal(
         url=f"https://www2.tjal.jus.br/cpopg/show.do?processo.numero={processo.cnj}",
     )
-    
-
-    segundo_grau = RasparTjalSegundoGrau(
-        processo.cnj
-    )
-
-    if dados is None:
-        dados = RasparTjce(
+    if primeiro_grau:
+        segundo_grau = RasparTjalSegundoGrau(
             processo.cnj
         )
+    else:
+        primeiro_grau = RasparTjce(
+            processo.cnj
+        )
+        if primeiro_grau:
+            segundo_grau = RasparTjceSegundoGrau(processo.cnj)
+    
 
-    if not dados:
+    if not primeiro_grau:
         return JSONResponse(
             content={"message": "Cnj inválido."},
             status_code=400
         )
-
-    primeiro_grau = dados.get("primeiro_grau")
 
     return {
         "processo": {
@@ -53,14 +55,15 @@ async def buscar(processo: Processo):
                 "data_de_distribuicao": primeiro_grau.get("data_de_distribuicao"),
                 "juiz": primeiro_grau.get("juiz"),
                 "valor_da_acao": primeiro_grau.get("valor_da_acao"),   
-                "partes_do_processo": primeiro_grau.get("partes_do_processo")
+                "partes_do_processo": primeiro_grau.get("partes_do_processo"),
+                "movimentacoes": primeiro_grau.get("movimentacoes"),
             },
             "segundo_grau": {
                 "cnj": segundo_grau.get("cnj"),
                 "classe": segundo_grau.get("classe"),
                 "area": segundo_grau.get("area"),
                 "assunto": segundo_grau.get("assunto"),
-                "orgao_julgador": segundo_grau.get("orgao_julgador"),    
+                "juiz": segundo_grau.get("juiz"),    
                 "valor_da_acao": segundo_grau.get("valor_da_acao"),
                 "partes_do_processo": segundo_grau.get("partes_do_processo"),
                 "movimentacoes": segundo_grau.get("movimentacoes")
