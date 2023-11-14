@@ -20,12 +20,12 @@ def RasparTjce(cnj):
     navegador.find_element("xpath", '//*[@id="nuProcessoAntigoFormatado"]').send_keys("0070337-91.2008.8.06.0001")
     navegador.find_element("xpath", '//*[@id="botaoConsultarProcessos"]').click()
     
+
     soup = BeautifulSoup(navegador.page_source, "html.parser")
     response = etree.HTML(str(soup))
 
     if not response.xpath('//*[@id="numeroProcesso"]/text()'):
         return None
-
     cnj = response.xpath('//*[@id="numeroProcesso"]/text()')[0].strip()
     classe = response.xpath('//*[@id="classeProcesso"]/text()')[0]
     area = response.xpath('//*[@id="areaProcesso"]/span/text()')[0]
@@ -33,7 +33,6 @@ def RasparTjce(cnj):
     data_de_distribuicao = response.xpath(
         '//*[@id="dataHoraDistribuicaoProcesso"]/text()'
     )[0].split()[0]
-    import pdb; pdb.set_trace()
     juiz = ''
     if response.xpath('//*[@id="juizProcesso"]/text()'):
         juiz = response.xpath(
@@ -44,10 +43,21 @@ def RasparTjce(cnj):
         valor_da_acao = response.xpath(
             '//*[@id="valorAcaoProcesso"]/text()'
         )[0].replace(' ', '')
-        
+    import ipdb; ipdb.set_trace()
+    partes_do_processo = []
+    trs = soup.select("#tablePartesPrincipais tr")
+    for tr in trs:
+        participacao = tr.select(".mensagemExibindo")[0].contents[0].strip()
+        nome = tr.select(".nomeParteEAdvogado")[0].contents[0].strip()
 
-
-
+        partes_do_processo.append(
+            {
+                "participacao": participacao,
+                "nome": nome,
+            }
+        )
+    
+    
     return {
         "primeiro_grau": {
             "cnj": cnj,
@@ -57,6 +67,12 @@ def RasparTjce(cnj):
             "data_de_distribuicao": data_de_distribuicao,
             "juiz": juiz,
             "valor_da_acao": valor_da_acao,
+            "partes_do_processo": partes_do_processo,
+            "re": re,
+            "re_adv": re_adv,
+            "reu": reu,
+            "reu_adv": reu_adv,
+            "movimentacoes": movimentacoes,
         }
         
     }
