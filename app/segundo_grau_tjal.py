@@ -16,7 +16,7 @@ def RasparTjalSegundoGrau(cnj):
 
     navegador.get("https://www2.tjal.jus.br/cposg5/open.do")
     navegador.find_element("xpath", '//*[@id="radioNumeroAntigo"]').click()
-    navegador.find_element("xpath", '//*[@id="nuProcessoAntigoFormatado"]').send_keys('0710802-55.2018.8.02.0001')
+    navegador.find_element("xpath", '//*[@id="nuProcessoAntigoFormatado"]').send_keys(cnj)
     navegador.find_element("xpath", '//*[@id="pbConsultar"]').click()
     navegador.find_element("xpath", '//*[@id="processoSelecionado"]').click()
     navegador.find_element("xpath", '//*[@id="botaoEnviarIncidente"]').click()
@@ -25,13 +25,16 @@ def RasparTjalSegundoGrau(cnj):
     soup = BeautifulSoup(navegador.page_source, "html.parser")
     
     cnj = soup.select("#numeroProcesso")[0].text.strip()
+
     if not cnj:
         return None
     
     classe = soup.select("#classeProcesso")[0].text.strip()
     area = soup.select("#areaProcesso")[0].text.strip()
     assunto = soup.select("#assuntoProcesso")[0].text.strip()
-    orgao_julgador = soup.select("#orgaoJulgadorProcesso")[0].text.strip()
+    juiz = soup.select(
+            "body > div.div-conteudo.container.unj-mb-40 > table:nth-child(13) > tbody > tr > td:nth-child(4)"
+        )[0].text.strip()
     valor_da_acao = soup.select("#valorAcaoProcesso")[0].text.strip()
 
     partes_do_processo = []
@@ -73,7 +76,7 @@ def RasparTjalSegundoGrau(cnj):
         "classe": classe,
         "area": area,
         "assunto": assunto,
-        "orgao_julgador": orgao_julgador,
+        "juiz": juiz,
         "valor_da_acao": valor_da_acao,
         "partes_do_processo": partes_do_processo,
         "movimentacoes": movimentacoes,
