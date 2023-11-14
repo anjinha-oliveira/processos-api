@@ -6,9 +6,10 @@ Para isso foi necessário desenvolver crawlers para a coleta desses dados em sua
 
 ### Tecnologias usadas
 
-* Python3 3.5
+* Python3
 * Fastapi
 * Pytest
+* Selenium
 * Postman
 
 Para executar API (Executar comando no **root** do projeto):
