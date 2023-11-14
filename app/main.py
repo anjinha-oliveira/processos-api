@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from raspagem_tjal import RasparTjal
-from raspagem_tjce import RasparTjce
-from segundo_grau_tjal import RasparTjalSegundoGrau
-from segundo_grau_tjce import RasparTjceSegundoGrau
+from app.raspadores.raspagem_tjal import RasparTjal
+from app.raspadores.raspagem_tjce import RasparTjce
+from app.raspadores.segundo_grau_tjal import RasparTjalSegundoGrau
+from app.raspadores.segundo_grau_tjce import RasparTjceSegundoGrau
 
 from pydantic import BaseModel
 
