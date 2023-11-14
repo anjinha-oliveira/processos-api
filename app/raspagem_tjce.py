@@ -8,7 +8,6 @@ from lxml import etree
 from bs4 import BeautifulSoup
 
 
-
 def RasparTjce(cnj):
     service = Service(ChromeDriverManager().install())
 
@@ -17,7 +16,7 @@ def RasparTjce(cnj):
 
     navegador.get("https://esaj.tjce.jus.br/cpopg/open.do")
     navegador.find_element("xpath", '//*[@id="radioNumeroAntigo"]').click()
-    navegador.find_element("xpath", '//*[@id="nuProcessoAntigoFormatado"]').send_keys("0070337-91.2008.8.06.0001")
+    navegador.find_element("xpath", '//*[@id="nuProcessoAntigoFormatado"]').send_keys(cnj)
     navegador.find_element("xpath", '//*[@id="botaoConsultarProcessos"]').click()
     
 
@@ -26,6 +25,7 @@ def RasparTjce(cnj):
 
     if not response.xpath('//*[@id="numeroProcesso"]/text()'):
         return None
+    
     cnj = response.xpath('//*[@id="numeroProcesso"]/text()')[0].strip()
     classe = response.xpath('//*[@id="classeProcesso"]/text()')[0]
     area = response.xpath('//*[@id="areaProcesso"]/span/text()')[0]
@@ -74,15 +74,13 @@ def RasparTjce(cnj):
         )
 
     return {
-        "primeiro_grau": {
-            "cnj": cnj,
-            "classe": classe,
-            "area": area,
-            "assunto": assunto,
-            "data_de_distribuicao": data_de_distribuicao,
-            "juiz": juiz,
-            "valor_da_acao": valor_da_acao,
-            "partes_do_processo": partes_do_processo,
-            "movimentacoes": movimentacoes
-        }
+        "cnj": cnj,
+        "classe": classe,
+        "area": area,
+        "assunto": assunto,
+        "data_de_distribuicao": data_de_distribuicao,
+        "juiz": juiz,
+        "valor_da_acao": valor_da_acao,
+        "partes_do_processo": partes_do_processo,
+        "movimentacoes": movimentacoes
     }
